@@ -4,7 +4,7 @@ import { TonClient, WalletContractV4, internal } from "@ton/ton";
 
 async function main() {
   // open wallet v4 (notice the correct wallet version here)
-  const mnemonic = "unfold sugar water ..."; // your 24 secret words (replace ... with the rest of the words)
+  const mnemonic = "pet carpet happy .."; // your 24 secret words (replace ... with the rest of the words)
   const key = await mnemonicToWalletKey(mnemonic.split(" "));
   const wallet = WalletContractV4.create({ publicKey: key.publicKey, workchain: 0 });
 
@@ -25,9 +25,9 @@ async function main() {
     seqno: seqno,
     messages: [
       internal({
-        to: "EQA4V9tF4lY2S_J-sEQR7aUj9IwW-Ou2vJQlCn--2DLOLR5e",
+        to: "UQDwd3NJ1CbXzroiNEBtzH6_hWCWRDUhlD_8m0ac7YR-9vWE",
         value: "0.05", // 0.05 TON
-        body: "Hello", // optional comment
+        body: "Hello this is the first automated transaction ", // optional comment
         bounce: false,
       })
     ]
