@@ -1,0 +1,61 @@
+#include "imports/stdlib.fc";
+
+int main() {
+
+    cell bid_packs = new_dict(); dicto
+    cell token_dict = new_dict();
+    bid_packs~udict_set(256, 1, 50);
+    bid_packs~udict_set(256, 2, 100);
+    bid_packs~udict_set(256, 3, 250);
+    bid_packs~udict_set(256, 4, 500);
+    bid_packs~udict_set(256, 5, 1000);
+    bid_packs~udict_set(256, 6, 2500);
+    bid_packs~udict_set(256, 7, 5000);
+    bid_packs~udict_set(256, 8, 10000);
+
+    slice usdt_key = "USDT"; ;; convertiendo el string a un slice adecuadamente
+    slice usdc_key = "USDC"; ;;
+    slice dai_key = "DAI"; ;; 
+
+    slice usdt_address = EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs; ;; dirección de USDT como slice */;
+    slice usdc_address = ;; dirección de USDC como slice */;
+    slice dai_address = ;; dirección de DAI como slice */;
+
+    token_dict~dict_set(256, usdt_key, UQDwd3NJ1CbXzroiNEBtzH6_hWCWRDUhlD_8m0ac7YR-9vWE);
+    token_dict~dict_set(256, usdc_key, UQDwd3NJ1CbXzroiNEBtzH6_hWCWRDUhlD_8m0ac7YR-9vWE);
+    token_dict~dict_set(256, dai_key, UQDwd3NJ1CbXzroiNEBtzH6_hWCWRDUhlD_8m0ac7YR-9vWE);
+}
+
+
+int authorize_purchase(cell bid_packs, cell token_dict, slice currency, int[] bid_pack_ids) {
+    int total_amount = 0;
+    cell amounts_paid = new_dict(); ;; Diccionario para almacenar los montos pagados por cada paquete
+
+    for (int i = 0; i < len(bid_pack_ids); i++) {
+        int bid_pack_id = bid_pack_ids[i];
+        int total_bids = bid_packs~udict_get(256, bid_pack_id); ;; Obtener el número de bids del paquete
+        if (total_bids == 0) {
+            continue; ;; Si el paquete no es válido, continúa con el siguiente
+        }
+        int amount = total_bids * 50000; ;; Calcular el monto (ajustar la multiplicación según la precisión decimal deseada)
+        total_amount += amount;
+        amounts_paid~udict_set(256, bid_pack_id, amount); ;; Almacenar el monto pagado por el paquete
+    }
+
+    ;; Obtener el precio del token en USD (implementar getLatestPrice en FunC)
+    int price = get_latest_price(token_dict, currency);
+    int total_amount_in_currency = total_amount / price; // Convertir el monto total a la moneda deseada
+
+    ;; Implementar la lógica de transferencia y verificación de permisos (requerirá interacción con contratos de token)
+
+    return 1; ;; Devolver un indicador de éxito
+}
+
+;; Función para obtener el precio más reciente de un token
+int get_latest_price(cell price_feeds, slice currency) {
+    ;; Obtener el precio desde un oráculo o una fuente similar
+    ;; Esto dependerá de cómo se integren los oráculos en tu entorno TON
+    ;; Puedes necesitar un contrato separado o una función específica para esto
+
+    return price; ;; Suponiendo que obtenemos el precio como un entero
+}
